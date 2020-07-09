@@ -6,7 +6,7 @@ const connection = mysql.createConnection({
   port: 3306,
   user: "root",
   password: "Mwd768!!!",
-  database: "ice_creamDB"
+  database: "employee_db"
 });
 
 connection.connect(function(err) {
@@ -16,7 +16,7 @@ connection.connect(function(err) {
 });
 
 function afterConnection() {
-  connection.query("SELECT * FROM products", function(err, res) {
+  connection.query("SELECT * FROM employees", function(err, res) {
     if (err) throw err;
     console.log(res);
     connection.end();
