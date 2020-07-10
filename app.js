@@ -18,7 +18,7 @@ connection.connect(function (err) {
 
 // function which prompts the user for what action they should take
 function start() {
-  console.log("app init");
+  // console.log("app init");
   inquirer
     .prompt({
       name: "primaryChoice",
@@ -37,37 +37,55 @@ function start() {
     })
     .then(function (answer) {
       // based on their answer, prompt the user with the right questions
-      console.log(answer);
-      /* switch (answer) {
-        case 0:
-          day = "Sunday";
+      const primaryQuest = answer;
+      console.log(answer.primaryChoice);
+      console.log(typeof answer.primaryChoice);
+      if (answer.primaryChoice === "View All Employees By Department") {
+        console.log("option 1");
+      } else if (answer.primaryChoice === "View All Employees By Manager") {
+        console.log("option 2");
+      } else if (answer.primaryChoice === "Add Employee") {
+        console.log("option 3");
+      } else if (answer.primaryChoice === "Remove Employee") {
+        console.log("option 4");
+      } else if (answer.primaryChoice === "Update Employee Role") {
+        console.log("option 5");
+      } else if (answer.primaryChoice === "Update Employee Manager") {
+        console.log("option 6");
+      } else if (answer.primaryChoice === "View All Roles") {
+        console.log("option 7");
+      } else if (answer.primaryChoice === "Exit") {
+        console.log("Have a good day!");
+        connection.end();
+      } else {
+        console.log("PQ error");
+        connection.end();
+      }
+      /* switch (answer.primaryChoice) {
+        case "View All Employees By Department":
+          console.log("View All Employees By Department");
           break;
-        case 1:
+        case "View All Employees By Manager":
           day = "Monday";
           break;
-        case 2:
+        case "Add Employee":
           day = "Tuesday";
           break;
-        case 3:
-          day = "Wednesday";
+        case "Remove Employee":
+          console.log("Remove Employee");
           break;
-        case 4:
-          day = "Thursday";
+        case "Update Employee Role":
+          console.log("Update Employee Role");
           break;
-        case 5:
-          day = "Friday";
+        case "View All Roles":
+          "View All Roles";
           break;
-        case 6:
-          day = "Saturday";
-      } */
-
-      /* if (answer.postOrBid === "POST") {
-        postAuction();
-      }
-      else if(answer.postOrBid === "BID") {
-        bidAuction();
-      } else{
-        connection.end();
+        case "Exit":
+          conssole.log("Exit");
+          break;
+        default:
+          console.log("switch case error");
+          break;
       } */
     });
 }
