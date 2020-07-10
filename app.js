@@ -40,8 +40,13 @@ function start() {
       const primaryQuest = answer;
       console.log(answer.primaryChoice);
       console.log(typeof answer.primaryChoice);
-      if (answer.primaryChoice === "View All Employees By Department") {
-        console.log("option 1");
+      if (answer.primaryChoice === "View All Employees") {
+        // console.log("View All Employees");
+        viewAll();
+        start();
+      } else if (answer.primaryChoice === "View All Employees By Department") {
+        // console.log("option 1");
+        start();
       } else if (answer.primaryChoice === "View All Employees By Manager") {
         console.log("option 2");
       } else if (answer.primaryChoice === "Add Employee") {
@@ -61,31 +66,17 @@ function start() {
         console.log("PQ error");
         connection.end();
       }
-      /* switch (answer.primaryChoice) {
-        case "View All Employees By Department":
-          console.log("View All Employees By Department");
-          break;
-        case "View All Employees By Manager":
-          day = "Monday";
-          break;
-        case "Add Employee":
-          day = "Tuesday";
-          break;
-        case "Remove Employee":
-          console.log("Remove Employee");
-          break;
-        case "Update Employee Role":
-          console.log("Update Employee Role");
-          break;
-        case "View All Roles":
-          "View All Roles";
-          break;
-        case "Exit":
-          conssole.log("Exit");
-          break;
-        default:
-          console.log("switch case error");
-          break;
-      } */
     });
+}
+// View All Employees
+function viewAll() {
+  console.log("All Employees: ");
+  let deptQuery =
+    "SELECT employees.id, employees.first_name, employees.last_name, role.title, department.name, role.salary, employees.manager_id FROM employees INNER JOIN role ON employees.role_id = role.id INNER JOIN department ON role.department_id = department.id ORDER BY employees.last_name;";
+  connection.query(deptQuery, function (err, res) {
+    if (err) throw err;
+    // console.log(res);
+    console.table(res);
+    connection.end();
+  });
 }
