@@ -12,8 +12,6 @@ CREATE TABLE employees
     PRIMARY KEY (id)
 );
 
-SELECT * FROM employees;
-
 CREATE TABLE role
 (
     id INTEGER AUTO_INCREMENT NOT NULL,
@@ -23,7 +21,6 @@ CREATE TABLE role
     department_id INTEGER NOT NULL,
     PRIMARY KEY (id)
 );
-SELECT * FROM role;
 
 CREATE TABLE department
 (
@@ -32,24 +29,23 @@ CREATE TABLE department
     PRIMARY KEY (id)
 );
 
-SELECT * FROM department;
-
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("John", "Doe", 2, 3);
+VALUES ("Tom", "Allen", 2, 3);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Mike", "Chan", 2, 3);
+VALUES ("Malia", "Brown", 1, 0);
+INSERT INTO employees (first_name, last_name, role_id, manager_id)
+VALUES ("Mike", "Chan", 6, 2);
+INSERT INTO employees (first_name, last_name, role_id, manager_id)
+VALUES ("John", "Doe", 5, 4);
+INSERT INTO employees (first_name, last_name, role_id, manager_id)
+VALUES ("Christian", "Eckenrode", 3, 1);
+INSERT INTO employees (first_name, last_name, role_id, manager_id)
+VALUES ("Sarah", "Lourd", 4, 0);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES ("Ashley", "Rodriguez", 3, 0);
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Kevin", "Tupik", 3, 0);
-INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Malia", "Brown", 3, 0);
-INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Sarah", "Lourd", 3, 0);
-INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Tom", "Allen", 3, 0);
-INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Christian", "Eckenrode", 3, 0);
+VALUES ("Kevin", "Tupik", 7, 4);
+
 
 INSERT INTO department (name)
 VALUES ("Engineering");
@@ -61,19 +57,16 @@ INSERT INTO department (name)
 VALUES ("Sales");
 
 INSERT INTO role (title, salary, role_id, department_id)
-VALUES ("Sales Lead", "100000", 1, 4);
+VALUES ("Accountant", "125000", 1, 2);
 INSERT INTO role (title, salary, role_id, department_id)
-VALUES ("Salesperson", "80000", 2, 4);
-INSERT INTO role (title, salary, role_id, department_id)
-VALUES ("Lead Engineer", "150000", 3, 1);
-INSERT INTO role (title, salary, role_id, department_id)
-VALUES ("Software Engineer", "120000", 4, 1);
-INSERT INTO role (title, salary, role_id, department_id)
-VALUES ("Accountant", "125000", 5, 2);
-INSERT INTO role (title, salary, role_id, department_id)
-VALUES ("Legal Team Lead", "250000", 6, 3);
-INSERT INTO role (title, salary, role_id, department_id)
-VALUES ("Lawyer", "190000", 7, 3);
+VALUES ("Lawyer", "190000", 2, 3);
 INSERT INTO role (title, salary, role_id, department_id)
 VALUES ("Lead Engineer", "150000", 3, 1);
-    
+INSERT INTO role (title, salary, role_id, department_id)
+VALUES ("Legal Team Lead", "250000", 4, 3);
+INSERT INTO role (title, salary, role_id, department_id)
+VALUES ("Sales Lead", "100000", 5, 4);
+INSERT INTO role (title, salary, role_id, department_id)
+VALUES ("Salesperson", "80000", 6, 4);
+INSERT INTO role (title, salary, role_id, department_id)
+VALUES ("Software Engineer", "120000", 7, 1);
