@@ -65,7 +65,7 @@ function start() {
         // console.log("Update Employee Manager");
         updateMgr();
       } else if (answer.primaryChoice === "View All Roles") {
-        console.log("View All Roles");
+        // console.log("View All Roles");
         viewRoles();
       } else if (answer.primaryChoice === "Exit") {
         console.log("Have a good day!");
@@ -280,7 +280,7 @@ function updateMgr() {
 
 function viewRoles() {
   console.log("View All Roles");
-  var allRoles = "SELECT * from roles"
+  var allRoles = "SELECT role_id, title, salary,department_id FROM role ORDER BY role_id"
   connection.query(allRoles, function (err, res) {
     if (err) throw err;
     // console.log({ res });
