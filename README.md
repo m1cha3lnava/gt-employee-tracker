@@ -6,23 +6,25 @@
 
   ## Table of contents
 
-  - [Installation] (#installation)
-  - [Usage] (#usage)
-  - [Tests] (#tests)
-  - [License] (#license)
-  - [Contributing] (#contributing)
-  - [Questions] (#questions)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Tests](#tests)
+  - [License](#license)
+  - [Contributing](#contributing)
+  - [Questions](#questions)
   
   ## Installation
 
   To install necessary dependencies, run <code>npm install</code>.<br> 
-  Mysql Inquirer
+  Dependencies:<br>  
+  - Mysql 
+  - Inquirer
 
   ## Usage
   you must create a database in Mysql to house the information and enter your password in the quotes on line 9. I have provided the schema and seeds for your to fill the database with.
 
   ## Screenshots
-  
+  [Video of finished product](https://drive.google.com/file/d/17bUaQnXa15zQeg_JBgSXbz5AfGLX2A1M/view)
 
   ## Tests
   N/A
