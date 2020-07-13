@@ -19,7 +19,7 @@
   Mysql Inquirer
 
   ## Usage
-  you must create a database in Mysql to house the information. I have provided the schema and seeds for your to fill the database with.
+  you must create a database in Mysql to house the information and enter your password in the quotes on line 9. I have provided the schema and seeds for your to fill the database with.
 
   ## Screenshots
   

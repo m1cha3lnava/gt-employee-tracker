@@ -6,7 +6,7 @@ const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "Mwd768!!!",
+  password: "",
   database: "employee_db",
 });
 
@@ -297,6 +297,67 @@ function updateRole() {
 
 function updateMgr() {
   console.log("Update Employee Manager");
+  let allEmp =
+    "SELECT id, first_name, last_name, manager_id FROM employees ORDER BY id;";
+  connection.query(allEmp, function (err, res) {
+    if (err) throw err;
+    // console.log({ res });
+    console.log("/n========================/n");
+    console.table(res);
+  });
+  inquirer
+    .prompt([
+      {
+        name: "employee_id",
+        type: "input",
+        message: "What is the employee's id number?",
+        /* validate: function (value) {
+          if (isNaN(value) === false) {
+            return true;
+          }
+          return false;
+        }, */
+      },
+      {
+        name: "manager_id",
+        type: "input",
+        message: "What is the new manager id number?",
+        /*         validate: function (value) {
+          if (isNaN(value) === false) {
+            return true;
+          }
+          return false;
+        },
+ */
+      },
+    ])
+    .then(function (ans) {
+      // console.log("emp " + ans.employee);
+      // console.log("role " + ans.newRole);
+      let updateQuery =
+        "UPDATE employees SET manager_id = " +
+        ans.manager_id +
+        " WHERE id = " +
+        ans.employee_id +
+        ";";
+      connection.query(updateQuery, function (err) {
+        if (err) throw err;
+        console.log("Manager updated");
+        inquirer
+          .prompt({
+            name: "continue",
+            type: "confirm",
+            message: "Would you like to continue?",
+          })
+          .then(function (answer) {
+            if (answer.continue) {
+              start();
+            } else {
+              connection.end();
+            }
+          });
+      });
+    });
 }
 
 function viewRoles() {
