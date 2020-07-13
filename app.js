@@ -204,19 +204,23 @@ function removeEmp() {
   console.log("Remove Employee");
   selectRemove =
     "SELECT id, CONCAT(first_name, ' ', last_name) AS Employee FROM employees";
-  connection.query(selectRemove, function (err, results) {
+  connection.query(selectRemove, function (err, res) {
     if (err) throw err;
+    console.table(res);
   });
   console.log("Enter employee id number");
   inquirer
     .prompt({
-      name: "continue",
-      type: "confirm",
-      message: "Would you like to continue?",
+      name: "idNum",
+      type: "input",
+      message: "Enter employee id number",
     })
     .then(function (answer) {
       connection
-        .query("DELETE FROM employees WHERE id= ?", function (err, results) {
+        .query("DELETE FROM employees WHERE id=" + idNum + ";", function (
+          err,
+          results
+        ) {
           if (err) throw err;
         })
         .prompt({
