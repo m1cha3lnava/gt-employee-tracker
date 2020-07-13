@@ -100,7 +100,7 @@ function viewAll() {
       });
   });
 }
-
+// View All Employees By Department
 function viewByDept() {
   console.log("All Employees By Department: ");
   var empDept =
@@ -124,7 +124,7 @@ function viewByDept() {
       });
   });
 }
-
+// View All Employees By Manager
 function viewByMgr() {
   console.log("View All Employees By Manager");
   var empMgr =
@@ -199,50 +199,51 @@ function addEmp() {
       );
     });
 }
-
+// Remove Employees
 function removeEmp() {
   console.log("Remove Employee");
-  connection.query(
-    "SELECT CONCAT(first_name, ' ', last_name) AS Employee FROM employees",
-    function (err, results) {
-      if (err) throw err;
-      // once you have the items, prompt the user for which they'd like to bid on
-      inquirer
-        .prompt([
-          {
-            name: "choice",
-            type: "rawlist",
-            choices: function () {
-              var choiceArray = [];
-              for (var i = 0; i < results.length; i++) {
-                choiceArray.push(results[i].Employee);
-              }
-              return choiceArray;
-            },
-            message: "What employee would you like to remove?",
-          },
-        ])
+  selectRemove =
+    "SELECT id, CONCAT(first_name, ' ', last_name) AS Employee FROM employees";
+  connection.query(selectRemove, function (err, res) {
+    if (err) throw err;
+    console.table(res);
+  });
+  console.log("Enter employee id number");
+  inquirer
+    .prompt({
+      name: "idNum",
+      type: "input",
+      message: "Enter employee id number",
+    })
+    .then(function (answer) {
+      connection
+        .query("DELETE FROM employees WHERE id=" + idNum + ";", function (
+          err,
+          results
+        ) {
+          if (err) throw err;
+        })
+        .prompt({
+          name: "continue",
+          type: "confirm",
+          message: "Would you like to continue?",
+        })
         .then(function (answer) {
-          // console.log(answer);
-          console.log("Deleting " + answer.choice);
-          start();
-          /* connection.query(
-            "DELETE FROM products WHERE ?",
-            {
-              flavor: "strawberry",
-            },
-            function (err, res) {
-              if (err) throw err;
-              console.log(res.affectedRows + " products deleted!\n");
-              // Call readProducts AFTER the DELETE completes
-              readProducts();
-            }
-          ); */
+          if (answer.continue) {
+            start();
+          } else {
+            connection.end();
+          }
         });
-    }
-  );
-}
 
+      if (answer.continue) {
+        start();
+      } else {
+        connection.end();
+      }
+    });
+}
+// Update Employee Role
 function updateRole() {
   console.log("Update Employee Role");
   connection.query(
@@ -267,8 +268,30 @@ function updateRole() {
         ])
         .then(function (answer) {
           // console.log(answer);
-          console.log("Role updated for: " + answer.choice);
-          start();
+          console.log("Role update for: " + answer.choice);
+          var roleQuery = "Select role_id, title from role";
+          connection.query(roleQuery, function (err, res) {
+            if (err) throw err;
+            // console.log(res);
+            console.table(res);
+            console.log();
+            /* inquirer.prompt([
+              {
+                name: "choice",
+                type: "rawlist",
+                choices: function () {
+                  var choiceArray = [];
+                  for (var i = 0; i < results.length; i++) {
+                    choiceArray.push(results[i].title);
+                  }
+                  return choiceArray;
+                },
+                message: "What role should they have?",
+              },
+            ]).then;
+            console.log("Employee;s role updated");
+            start(); */
+          });
         });
     }
   );
@@ -280,7 +303,8 @@ function updateMgr() {
 
 function viewRoles() {
   console.log("View All Roles");
-  var allRoles = "SELECT role_id, title, salary,department_id FROM role ORDER BY role_id"
+  var allRoles =
+    "SELECT role_id, title, salary,department_id FROM role ORDER BY role_id";
   connection.query(allRoles, function (err, res) {
     if (err) throw err;
     // console.log({ res });
