@@ -85,19 +85,7 @@ function viewAll() {
     if (err) throw err;
     // console.log({ res });
     console.table(res);
-    inquirer
-      .prompt({
-        name: "continue",
-        type: "confirm",
-        message: "Would you like to continue?",
-      })
-      .then(function (answer) {
-        if (answer.continue) {
-          start();
-        } else {
-          connection.end();
-        }
-      });
+    start();
   });
 }
 // View All Employees By Department
@@ -216,13 +204,11 @@ function removeEmp() {
       message: "Enter employee id number",
     })
     .then(function (answer) {
-      connection
-        .query("DELETE FROM employees WHERE id=" + idNum + ";", function (
-          err,
-          results
-        ) {
-          if (err) throw err;
-        })
+      const removeEE = "DELETE FROM employees WHERE id=" + answer.idNum;
+      connection.query(removeEE, function (err, res) {
+        if (err) throw err;
+      });
+      inquirer
         .prompt({
           name: "continue",
           type: "confirm",
@@ -246,55 +232,67 @@ function removeEmp() {
 // Update Employee Role
 function updateRole() {
   console.log("Update Employee Role");
-  connection.query(
-    "SELECT CONCAT(first_name, ' ', last_name) AS Employee FROM employees",
-    function (err, results) {
-      if (err) throw err;
-      // once you have the items, prompt the user for which they'd like to bid on
-      inquirer
-        .prompt([
-          {
-            name: "choice",
-            type: "rawlist",
-            choices: function () {
-              var choiceArray = [];
-              for (var i = 0; i < results.length; i++) {
-                choiceArray.push(results[i].Employee);
-              }
-              return choiceArray;
-            },
-            message: "What employee's role would you like to update?",
-          },
-        ])
-        .then(function (answer) {
-          // console.log(answer);
-          console.log("Role update for: " + answer.choice);
-          var roleQuery = "Select role_id, title from role";
-          connection.query(roleQuery, function (err, res) {
-            if (err) throw err;
-            // console.log(res);
-            console.table(res);
-            console.log();
-            /* inquirer.prompt([
-              {
-                name: "choice",
-                type: "rawlist",
-                choices: function () {
-                  var choiceArray = [];
-                  for (var i = 0; i < results.length; i++) {
-                    choiceArray.push(results[i].title);
-                  }
-                  return choiceArray;
-                },
-                message: "What role should they have?",
-              },
-            ]).then;
-            console.log("Employee;s role updated");
-            start(); */
+  let allEmp =
+    "SELECT id, first_name, last_name,role_id FROM employees ORDER BY id;";
+  connection.query(allEmp, function (err, res) {
+    if (err) throw err;
+    // console.log({ res });
+    // console.log("/n========================/n");
+    console.table(res);
+  });
+  inquirer
+    .prompt([
+      {
+        name: "employee_id",
+        type: "input",
+        message: "What is the employee's id number?",
+        /* validate: function (value) {
+          if (isNaN(value) === false) {
+            return true;
+          }
+          return false;
+        }, */
+      },
+      {
+        name: "role_id",
+        type: "input",
+        message: "What is the new role's id number?",
+        /*         validate: function (value) {
+          if (isNaN(value) === false) {
+            return true;
+          }
+          return false;
+        },
+ */
+      },
+    ])
+    .then(function (ans) {
+      // console.log("emp " + ans.employee);
+      // console.log("role " + ans.newRole);
+      let updateQuery =
+        "UPDATE employees SET role_id = " +
+        ans.role_id +
+        " WHERE id = " +
+        ans.employee_id +
+        ";";
+      connection.query(updateQuery, function (err) {
+        if (err) throw err;
+        console.log("role updated");
+        inquirer
+          .prompt({
+            name: "continue",
+            type: "confirm",
+            message: "Would you like to continue?",
+          })
+          .then(function (answer) {
+            if (answer.continue) {
+              start();
+            } else {
+              connection.end();
+            }
           });
-        });
-    }
-  );
+      });
+    });
 }
 
 function updateMgr() {
